@@ -1,0 +1,46 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "finish": "Finalizar",
+    "share": "Compartir",
+    "tryAgain": "Intentar de nuevo"
+  },
+  "landing": {
+    "title": "Descubre qué tanto conoces tu música favorita",
+    "subtitle": "Pega tu playlist de Spotify y prepárate para el desafío musical definitivo",
+    "urlPlaceholder": "https://open.spotify.com/playlist/...",
+    "createQuiz": "¡Crear mi Quiz Musical!",
+    "howItWorks": {
+      "title": "¿Cómo funciona?",
+      "step1": "🔗 Pega tu playlist de Spotify",
+      "step2": "🎵 Responde las preguntas musicales", 
+      "step3": "🏆 Comparte tu puntuación"
+    },
+    "urlRequired": "Por favor, ingresa una URL de playlist válida",
+    "urlInvalid": "URL de Spotify no válida"
+  },
+  "quiz": {
+    "progress": "Pregunta {{current}} de {{total}}",
+    "score": "Puntuación: {{score}}",
+    "correct": "¡Correcto!",
+    "incorrect": "Incorrecto",
+    "nextQuestion": "Siguiente pregunta",
+    "seeResults": "Ver resultados"
+  },
+  "results": {
+    "title": "¡Quiz completado!",
+    "scoreTitle": "Tu puntuación final",
+    "messages": {
+      "perfect": "🎉 ¡Eres el MVP de esta playlist!",
+      "excellent": "🔥 ¡Sólido! Definitivamente conoces tu música",
+      "good": "🎵 Bueno... al menos tienes excelente gusto musical",
+      "fair": "😅 Esta playlist te está enseñando cosas nuevas",
+      "poor": "🎭 ¿Seguro que esta es tu playlist? 😉"
+    },
+    "playAgain": "🔄 Otra ronda, por favor",
+    "shareText": "¡Obtuve {{score}} de {{total}} en mi Quiz Musical de Spotify! 🎵"
+  }
+}

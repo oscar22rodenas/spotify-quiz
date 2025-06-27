@@ -1,0 +1,46 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "next": "Next",
+    "previous": "Previous", 
+    "finish": "Finish",
+    "share": "Share",
+    "tryAgain": "Try again"
+  },
+  "landing": {
+    "title": "Discover how well you know your favorite music",
+    "subtitle": "Paste your Spotify playlist and get ready for the ultimate musical challenge",
+    "urlPlaceholder": "https://open.spotify.com/playlist/...",
+    "createQuiz": "🎵 Create my Music Quiz!",
+    "howItWorks": {
+      "title": "How it works?",
+      "step1": "🔗 Paste your Spotify playlist",
+      "step2": "🎵 Answer the music questions",
+      "step3": "🏆 Share your score"
+    },
+    "urlRequired": "Please enter a valid playlist URL",
+    "urlInvalid": "Invalid Spotify URL"
+  },
+  "quiz": {
+    "progress": "Question {{current}} of {{total}}",
+    "score": "Score: {{score}}",
+    "correct": "Correct!",
+    "incorrect": "Incorrect",
+    "nextQuestion": "Next question",
+    "seeResults": "See results"
+  },
+  "results": {
+    "title": "Quiz completed!",
+    "scoreTitle": "Your final score",
+    "messages": {
+      "perfect": "🎉 You're the MVP of this playlist!",
+      "excellent": "🔥 Solid! You definitely know your music",
+      "good": "🎵 Well... at least you have excellent musical taste",
+      "fair": "😅 This playlist is teaching you new things",
+      "poor": "🎭 Are you sure this is your playlist? 😉"
+    },
+    "playAgain": "🔄 Another round, please",
+    "shareText": "I got {{score}} out of {{total}} on my Spotify Music Quiz! 🎵"
+  }
+}

@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.vue';
+import ResultsDisplay from '../components/results/ResultsDisplay.vue';
+import '../styles/global.css';
+---
+
+<Layout title="Resultados - Spotify Quiz">
+  <Header client:load />
+  <main>
+    <ResultsDisplay client:load />
+  </main>
+</Layout>

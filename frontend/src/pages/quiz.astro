@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.vue';
+import QuizInterface from '../components/quiz/QuizInterface.vue';
+import '../styles/global.css';
+---
+
+<Layout title="Quiz Musical - Spotify Quiz">
+  <Header client:load />
+  <main>
+    <QuizInterface client:load />
+  </main>
+</Layout>

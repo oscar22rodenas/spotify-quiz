@@ -1,0 +1,46 @@
+{
+  "common": {
+    "loading": "Carregant...",
+    "error": "Error",
+    "next": "Següent",
+    "previous": "Anterior",
+    "finish": "Acabar",
+    "share": "Compartir",
+    "tryAgain": "Intentar de nou"
+  },
+  "landing": {
+    "title": "Descobreix què tan bé coneixes la teva música favorita",
+    "subtitle": "Enganxa la teva playlist de Spotify i prepara't per al desafiament musical definitiu",
+    "urlPlaceholder": "https://open.spotify.com/playlist/...",
+    "createQuiz": "Crear el meu Quiz Musical!",
+    "howItWorks": {
+      "title": "Com funciona?",
+      "step1": "🔗 Enganxa la teva playlist de Spotify",
+      "step2": "🎵 Respon les preguntes musicals",
+      "step3": "🏆 Comparteix la teva puntuació"
+    },
+    "urlRequired": "Si us plau, introdueix una URL de playlist vàlida",
+    "urlInvalid": "URL de Spotify no vàlida"
+  },
+  "quiz": {
+    "progress": "Pregunta {{current}} de {{total}}",
+    "score": "Puntuació: {{score}}",
+    "correct": "Correcte!",
+    "incorrect": "Incorrecte",
+    "nextQuestion": "Següent pregunta",
+    "seeResults": "Veure resultats"
+  },
+  "results": {
+    "title": "Quiz completat!",
+    "scoreTitle": "La teva puntuació final",
+    "messages": {
+      "perfect": "🎉 Ets l'MVP d'aquesta playlist!",
+      "excellent": "🔥 Sòlid! Definitivament coneixes la teva música",
+      "good": "🎵 Bé... almenys tens un gust musical excel·lent",
+      "fair": "😅 Aquesta playlist t'està ensenyant coses noves",
+      "poor": "🎭 Segur que aquesta és la teva playlist? 😉"
+    },
+    "playAgain": "🔄 Una altra ronda, si us plau",
+    "shareText": "He obtingut {{score}} de {{total}} al meu Quiz Musical de Spotify! 🎵"
+  }
+}

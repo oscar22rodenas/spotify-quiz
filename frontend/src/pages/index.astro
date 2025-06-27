@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.vue';
+import HeroSection from '../components/landing/HeroSection.vue';
+import QuizForm from '../components/landing/QuizForm.vue';
+import HowItWorks from '../components/landing/HowItWorks.vue';
+import '../styles/global.css';
+---
+
+<Layout title="Spotify Quiz - Descubre tu conocimiento musical">
+  <Header client:load />
+  <main>
+    <HeroSection client:load />
+    <QuizForm client:load />
+    <HowItWorks client:load />
+  </main>
+  
+  <!-- Footer -->
+  <footer class="bg-charcoal dark:bg-slate-900 text-pearl py-12 mt-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-6">
+        <div class="flex items-center justify-center gap-3">
+          <div class="w-8 h-8 bg-gradient-to-r from-melody-500 to-beat-500 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-sm">SQ</span>
+          </div>
+          <span class="font-outfit font-bold text-xl">Spotify Quiz</span>
+        </div>
+        
+        <p class="text-slate-300 max-w-2xl mx-auto">
+          Descubre qué tanto conoces tu música favorita. Conecta tu playlist de Spotify y pon a prueba tus conocimientos musicales con nuestro quiz interactivo.
+        </p>
+        
+        <div class="flex justify-center gap-6 text-sm text-slate-400">
+          <span>© 2024 Spotify Quiz</span>
+          <span>•</span>
+          <span>Hecho con ❤️ para los amantes de la música</span>
+        </div>
+        <span class="block mt-16 text-sm text-slate-400">Óscar Ródenas</span>
+      </div>
+    </div>
+  </footer>
+</Layout>

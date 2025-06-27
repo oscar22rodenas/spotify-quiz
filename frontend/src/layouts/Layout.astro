@@ -1,0 +1,98 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description = "Descubre qué tanto conoces tu música favorita con nuestro quiz musical de Spotify", image = "/og-image.jpg" } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!DOCTYPE html>
+<html class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+    <title>{title}</title>
+
+    <!-- Initialize theme and language before hydration -->
+    <script>
+      // Set theme immediately to prevent hydration mismatch
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+      
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      }
+      
+      // Set language immediately to prevent hydration mismatch
+      const savedLanguage = localStorage.getItem('language') || 'es';
+      document.documentElement.lang = savedLanguage;
+    </script>
+  </head>
+  <body class="min-h-screen bg-gradient-to-br from-pearl via-white to-melody-50 dark:from-charcoal dark:via-slate-900 dark:to-melody-900/20">
+    <div id="app" class="min-h-screen">
+      <slot />
+    </div>
+    
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      body {
+        transition: background-color 0.3s ease;
+      }
+      
+      #app {
+        position: relative;
+        overflow-x: hidden;
+      }
+      
+      /* Background pattern */
+      #app::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+          radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 75% 75%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: -1;
+      }
+    </style>
+
+    <script>
+      import { getCurrentLanguage, loadTranslations } from '../utils/i18n';
+      
+      // Initialize translations and language
+      loadTranslations().then(() => {
+        getCurrentLanguage(); // This will set the language from localStorage if available
+      });
+    </script>
+  </body>
+</html>
