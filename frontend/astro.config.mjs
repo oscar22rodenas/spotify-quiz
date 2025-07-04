@@ -15,6 +15,17 @@ export default defineConfig({
   vite: {
     optimizeDeps: {
       include: ['vue', '@vueuse/core', 'lucide-vue-next']
+    },
+    server: {
+      port: 4321,
+      proxy: {
+        // Redirige /api al backend en 3000
+        '/api': {
+          target: 'http://localhost:3000',
+          changeOrigin: true,
+          secure: false,
+        }
+      }
     }
   }
 });

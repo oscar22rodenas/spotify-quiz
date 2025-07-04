@@ -64,7 +64,7 @@ import { ref, computed, reactive, onMounted } from 'vue';
 import { Music, Check, AlertCircle, Link } from 'lucide-vue-next';
 import Button from '../ui/Button.vue';
 import Card from '../ui/Card.vue';
-import { isValidSpotifyUrl, generateMockQuiz } from '../../utils/spotify';
+import { isValidSpotifyUrl, fetchQuizFromApi } from '../../utils/spotify';
 import { t } from '../../utils/i18n';
 
 const playlistUrl = ref('');
@@ -105,7 +105,7 @@ const handleSubmit = async () => {
   isLoading.value = true;
   
   try {
-    const questions = await generateMockQuiz(playlistUrl.value);
+    const questions = await fetchQuizFromApi(playlistUrl.value);
     
     // Store quiz data in sessionStorage for the quiz page
     sessionStorage.setItem('quiz-questions', JSON.stringify(questions));
