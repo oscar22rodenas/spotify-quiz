@@ -33,7 +33,7 @@
           <div class="p-6 bg-gradient-to-r from-melody-50 to-beat-50 dark:from-melody-900/20 dark:to-beat-900/20 rounded-xl">
             <div class="text-2xl mb-2">{{ getScoreEmoji() }}</div>
             <p class="text-lg font-medium text-charcoal dark:text-pearl">
-              {{ getScoreMessage() }}
+              {{ getScoreMessageText() }}
             </p>
           </div>
         </div>
@@ -151,8 +151,12 @@ import { ref, computed, onMounted, reactive } from 'vue';
 import { Check, X, ChevronDown, Share, Copy, RotateCcw, Home } from 'lucide-vue-next';
 import Button from '../ui/Button.vue';
 import Card from '../ui/Card.vue';
-import { type QuizState, calculateScorePercentage, getScoreMessage } from '../../utils/spotify';
+import { type QuizState, calculateScorePercentage, getScoreMessage as getScoreMessageUtil } from '../../utils/spotify';
 import { t } from '../../utils/i18n';
+import { useNavigation } from '../../composables/useNavigation';
+
+// Usar el composable de navegación
+const { navigateTo } = useNavigation();
 
 // Add reactive state for translations
 const translations = reactive({});
@@ -185,8 +189,8 @@ const getScoreEmoji = () => {
   return '🎭';
 };
 
-const getScoreMessage = () => {
-  const messageKey = getScoreMessage(scorePercentage.value);
+const getScoreMessageText = (): string => {
+  const messageKey = getScoreMessageUtil(scorePercentage.value);
   return t(`results.messages.${messageKey}`);
 };
 
@@ -239,12 +243,14 @@ const playAgain = () => {
   // Clear session storage and redirect to home
   sessionStorage.removeItem('quiz-questions');
   sessionStorage.removeItem('quiz-results');
-  sessionStorage.removeItem('playlist-url');
-  window.location.href = '/';
+  navigateTo('/quiz');
 };
 
 const goHome = () => {
-  window.location.href = '/';
+  sessionStorage.removeItem('quiz-questions');
+  sessionStorage.removeItem('quiz-results');
+  sessionStorage.removeItem('playlist-url');
+  navigateTo('/');
 };
 
 // Animate score counter
@@ -267,20 +273,97 @@ const animateScore = () => {
 };
 
 onMounted(() => {
-  // Load results data
-  const storedResults = sessionStorage.getItem('quiz-results');
-  if (storedResults) {
-    results.value = JSON.parse(storedResults);
-    // Start score animation
-    setTimeout(animateScore, 500);
-  } else {
-    // Redirect to home if no results data
-    window.location.href = '/';
-  }
+  console.log('🏆 ResultsDisplay montado');
+  console.log('📍 URL actual:', window.location.pathname);
+  console.log('📦 Storages disponibles:', {
+    sessionStorage: typeof(Storage) !== "undefined",
+    localStorage: typeof(Storage) !== "undefined"
+  });
+  
+  const loadResults = () => {
+    console.log('🔍 Buscando resultados...');
+    
+    // Intentar desde sessionStorage primero, luego localStorage
+    let storedResults = null;
+    let source = '';
+    
+    // Comprobar sessionStorage
+    const sessionData = sessionStorage.getItem('quiz-results');
+    if (sessionData) {
+      storedResults = sessionData;
+      source = 'sessionStorage';
+      console.log('✅ Datos encontrados en sessionStorage');
+    }
+    
+    // Si no hay en session, comprobar localStorage
+    if (!storedResults) {
+      const localData = localStorage.getItem('quiz-results-backup');
+      if (localData) {
+        storedResults = localData;
+        source = 'localStorage backup';
+        console.log('✅ Datos encontrados en localStorage backup');
+      }
+    }
+    
+    console.log(`📋 Fuente de datos: ${source}`);
+    console.log(`📋 Datos encontrados:`, storedResults ? 'SÍ' : 'NO');
+    
+    if (storedResults) {
+      try {
+        const parsedResults = JSON.parse(storedResults);
+        console.log('✅ Resultados parseados:', parsedResults);
+        
+        // Verificar estructura mínima
+        const hasScore = parsedResults.finalScore !== undefined || parsedResults.score !== undefined;
+        const hasTotal = parsedResults.totalQuestions !== undefined;
+        
+        console.log('🔍 Verificación de datos:');
+        console.log(`  - Score: ${parsedResults.finalScore || parsedResults.score}`);
+        console.log(`  - Total: ${parsedResults.totalQuestions}`);
+        console.log(`  - Timestamp: ${parsedResults.timestamp}`);
+        
+        if (hasScore && hasTotal) {
+          results.value = parsedResults;
+          console.log('✅ Datos cargados correctamente');
+          setTimeout(animateScore, 500);
+        } else {
+          console.error('❌ Datos incompletos');
+          throw new Error('Datos incompletos');
+        }
+      } catch (error) {
+        console.error('❌ Error parseando resultados:', error);
+        redirectToHome();
+      }
+    } else {
+      console.warn('⚠️ No hay datos en ningún storage');
+      // Esperar un poco más antes de redirigir
+      setTimeout(() => {
+        console.log('🔄 Reintentando después de delay...');
+        const retrySession = sessionStorage.getItem('quiz-results');
+        const retryLocal = localStorage.getItem('quiz-results-backup');
+        if (retrySession || retryLocal) {
+          loadResults();
+        } else {
+          redirectToHome();
+        }
+      }, 1500); // Esperar más tiempo
+    }
+  };
+
+  const redirectToHome = () => {
+    console.log('🏠 Redirigiendo a home...');
+    // Limpiar storages antes de redirigir
+    sessionStorage.removeItem('quiz-results');
+    localStorage.removeItem('quiz-results-backup');
+    alert('No se encontraron resultados del quiz. Redirigiendo al inicio.');
+    navigateTo('/');
+  };
+
+  // Esperar un poco antes de cargar para dar tiempo a que se cargue la página
+  setTimeout(loadResults, 200);
   
   // Listen for language changes
   window.addEventListener('language-changed', () => {
-    // Force reactivity update
     Object.assign(translations, {});
   });
 });

@@ -16,16 +16,13 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Progress Bar -->
         <div class="progress-bar">
-          <div 
-            class="progress-fill"
-            :style="{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }"
-          ></div>
+          <div class="progress-fill" :style="{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }"></div>
         </div>
       </div>
-      
+
       <!-- Question Card -->
       <Card v-if="currentQuestionData" class="mb-8 animate-scaleIn">
         <div class="space-y-6">
@@ -38,63 +35,53 @@
               {{ currentQuestionData.question }}
             </h2>
           </div>
-          
+
           <!-- Answer Options -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <button
-              v-for="(option, index) in currentQuestionData.options"
-              :key="index"
-              @click="selectAnswer(index)"
-              :disabled="selectedAnswer !== null"
-              :class="[
+            <button v-for="(option, index) in currentQuestionData.options" :key="index" @click="selectAnswer(index)"
+              :disabled="selectedAnswer !== null" :class="[
                 'question-option',
                 {
                   'question-option-correct': selectedAnswer !== null && index === currentQuestionData.correctAnswer,
                   'question-option-incorrect': selectedAnswer !== null && index === selectedAnswer && index !== currentQuestionData.correctAnswer,
                   'opacity-50': selectedAnswer !== null && index !== selectedAnswer && index !== currentQuestionData.correctAnswer
                 }
-              ]"
-            >
+              ]">
               <div class="flex items-center justify-between">
                 <span>{{ option }}</span>
                 <div v-if="selectedAnswer !== null" class="ml-2">
                   <Check v-if="index === currentQuestionData.correctAnswer" :size="20" class="text-success" />
-                  <X v-else-if="index === selectedAnswer && index !== currentQuestionData.correctAnswer" :size="20" class="text-miss" />
+                  <X v-else-if="index === selectedAnswer && index !== currentQuestionData.correctAnswer" :size="20"
+                    class="text-miss" />
                 </div>
               </div>
             </button>
           </div>
-          
+
           <!-- Feedback -->
           <div v-if="selectedAnswer !== null" class="text-center space-y-4 animate-fadeIn">
-            <div 
-              :class="[
-                'text-lg font-semibold',
-                isCorrect ? 'text-success' : 'text-miss'
-              ]"
-            >
+            <div :class="[
+              'text-lg font-semibold',
+              isCorrect ? 'text-success' : 'text-miss'
+            ]">
               <div class="text-2xl mb-2">
                 {{ isCorrect ? '🎉' : '😅' }}
               </div>
               {{ isCorrect ? t('quiz.correct') : t('quiz.incorrect') }}
             </div>
-            
+
             <p v-if="currentQuestionData.explanation" class="text-slate dark:text-slate-300 text-sm">
               {{ currentQuestionData.explanation }}
             </p>
-            
-            <Button
-              @click="nextQuestion"
-              size="lg"
-              :class="{ 'animate-confetti': isCorrect }"
-            >
+
+            <Button @click="nextQuestion" size="lg" :class="{ 'animate-confetti': isCorrect }">
               <ArrowRight :size="20" />
               {{ isLastQuestion ? t('quiz.seeResults') : t('quiz.nextQuestion') }}
             </Button>
           </div>
         </div>
       </Card>
-      
+
       <!-- Quiz Completion -->
       <div v-if="quizState.isComplete" class="text-center animate-scaleIn">
         <Card>
@@ -121,6 +108,9 @@ import Button from '../ui/Button.vue';
 import Card from '../ui/Card.vue';
 import { type Question, type QuizState } from '../../utils/spotify';
 import { t } from '../../utils/i18n';
+import { useNavigation } from '../../composables/useNavigation';
+
+const { navigateTo } = useNavigation();
 
 // Add reactive state for translations
 const translations = reactive({});
@@ -151,14 +141,14 @@ const isLastQuestion = computed(() => {
 
 const selectAnswer = (answerIndex: number) => {
   if (selectedAnswer.value !== null) return;
-  
+
   selectedAnswer.value = answerIndex;
   const correct = answerIndex === currentQuestionData.value?.correctAnswer;
-  
+
   if (correct) {
     quizState.value.score++;
   }
-  
+
   // Store answer
   quizState.value.answers.push({
     questionId: currentQuestionData.value?.id || '',
@@ -173,12 +163,49 @@ const nextQuestion = () => {
     // Complete quiz
     quizState.value.isComplete = true;
     quizState.value.endTime = new Date();
-    
-    // Store results and redirect
-    sessionStorage.setItem('quiz-results', JSON.stringify(quizState.value));
-    setTimeout(() => {
-      window.location.href = '/results';
-    }, 2000);
+
+    // Asegurar que los datos se guarden correctamente
+    const resultsData = {
+      ...quizState.value,
+      questions: questions.value, // Asegurar que las preguntas estén incluidas
+      finalScore: quizState.value.score,
+      totalQuestions: questions.value.length,
+      scorePercentage: Math.round((quizState.value.score / questions.value.length) * 100)
+    };
+
+    try {
+      // Guardar en AMBOS storages para mayor seguridad
+      sessionStorage.setItem('quiz-results', JSON.stringify(resultsData));
+      localStorage.setItem('quiz-results-backup', JSON.stringify(resultsData));
+      
+      console.log('✅ Datos guardados en sessionStorage:', resultsData);
+      console.log('✅ Backup guardado en localStorage');
+      
+      // Verificar múltiples veces
+      const sessionCheck = sessionStorage.getItem('quiz-results');
+      const localCheck = localStorage.getItem('quiz-results-backup');
+      console.log('🔍 Verificación sessionStorage:', sessionCheck ? 'OK' : 'ERROR');
+      console.log('🔍 Verificación localStorage:', localCheck ? 'OK' : 'ERROR');
+      
+      // Forzar persistencia antes de navegar
+      setTimeout(() => {
+        // Verificar una vez más antes de navegar
+        const finalCheck = sessionStorage.getItem('quiz-results') || localStorage.getItem('quiz-results-backup');
+        console.log('🔍 Verificación final antes de navegar:', finalCheck ? 'OK' : 'ERROR');
+        
+        if (finalCheck) {
+          console.log('🔄 Navegando a resultados...');
+          navigateTo('/results');
+        } else {
+          console.error('❌ No se pudieron guardar los datos');
+          alert('Error guardando los resultados. Por favor, inténtalo de nuevo.');
+        }
+      }, 10000); // Reducir el tiempo de espera
+      
+    } catch (error) {
+      console.error('❌ Error guardando en sessionStorage:', error);
+      alert('Error guardando los resultados. Por favor, inténtalo de nuevo.');
+    }
   } else {
     // Next question
     currentQuestion.value++;
@@ -195,9 +222,9 @@ onMounted(() => {
     quizState.value.questions = questions.value;
   } else {
     // Redirect to home if no quiz data
-    window.location.href = '/';
+    navigateTo('/');
   }
-  
+
   // Listen for language changes
   window.addEventListener('language-changed', () => {
     // Force reactivity update

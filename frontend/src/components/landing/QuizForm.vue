@@ -66,6 +66,11 @@ import Button from '../ui/Button.vue';
 import Card from '../ui/Card.vue';
 import { isValidSpotifyUrl, fetchQuizFromApi } from '../../utils/spotify';
 import { t } from '../../utils/i18n';
+import { useNavigation } from '../../composables/useNavigation';
+
+// Usar el composable de navegación
+const { navigateTo } = useNavigation();
+
 
 const playlistUrl = ref('');
 const urlError = ref('');
@@ -105,6 +110,13 @@ const handleSubmit = async () => {
   isLoading.value = true;
   
   try {
+    // Si hay playlist-url del sessionStorage no hace falta hacer fetch
+    if (sessionStorage.getItem('playlist-url') === playlistUrl.value && sessionStorage.getItem('quiz-questions')) {
+      navigateTo('/quiz');
+      return;
+    }
+    
+    // Fetch quiz data
     const questions = await fetchQuizFromApi(playlistUrl.value);
     
     // Store quiz data in sessionStorage for the quiz page
@@ -112,7 +124,7 @@ const handleSubmit = async () => {
     sessionStorage.setItem('playlist-url', playlistUrl.value);
     
     // Navigate to quiz page
-    window.location.href = '/quiz';
+    navigateTo('/quiz');
   } catch (error) {
     console.error('Error generating quiz:', error);
     urlError.value = 'Error al generar el quiz. Por favor, inténtalo de nuevo.';
