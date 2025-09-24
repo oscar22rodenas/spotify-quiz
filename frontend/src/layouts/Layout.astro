@@ -51,9 +51,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       document.documentElement.lang = savedLanguage;
     </script>
   </head>
+---
+import I18nProvider from '../components/layout/I18nProvider.vue';
+---
   <body class="min-h-screen bg-gradient-to-br from-pearl via-white to-melody-50 dark:from-charcoal dark:via-slate-900 dark:to-melody-900/20">
     <div id="app" class="min-h-screen">
-      <slot />
+      <I18nProvider client:load>
+        <slot />
+      </I18nProvider>
     </div>
     
     <style>
@@ -85,14 +90,5 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         z-index: -1;
       }
     </style>
-
-    <script>
-      import { getCurrentLanguage, loadTranslations } from '../utils/i18n';
-      
-      // Initialize translations and language
-      loadTranslations().then(() => {
-        getCurrentLanguage(); // This will set the language from localStorage if available
-      });
-    </script>
   </body>
 </html>
