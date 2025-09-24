@@ -6,26 +6,40 @@ interface Translations {
   [key: string]: any;
 }
 
-const i18nState = reactive({
+export const i18nState = reactive({
   currentLanguage: 'es' as Language,
   translations: {
     es: {},
     en: {},
     ca: {}
-  } as Record<Language, Translations>
+  } as Record<Language, Translations>,
+  // Añadimos un estado para saber si las traducciones están cargando.
+  isLoading: true,
 });
 
-export async function loadTranslations() {
-  const languages: Language[] = ['es', 'en', 'ca'];
-  
-  for (const lang of languages) {
-    try {
-      const response = await fetch(`/locales/${lang}.json`);
-      i18nState.translations[lang] = await response.json();
-    } catch (error) {
-      console.error(`Failed to load translations for ${lang}:`, error);
-    }
+// Usamos una variable para asegurarnos de que la carga solo se dispare una vez.
+let loadTranslationsPromise: Promise<void> | null = null;
+
+export function loadTranslations() {
+  if (!loadTranslationsPromise) {
+    loadTranslationsPromise = (async () => {
+      try {
+        const languages: Language[] = ['es', 'en', 'ca'];
+        const fetchPromises = languages.map(async (lang) => {
+          const response = await fetch(`/locales/${lang}.json`);
+          if (!response.ok) throw new Error(`Failed to fetch ${lang}.json`);
+          i18nState.translations[lang] = await response.json();
+        });
+        await Promise.all(fetchPromises);
+      } catch (error) {
+        console.error("Failed to load translations:", error);
+      } finally {
+        // Una vez terminada la carga (con o sin error), lo indicamos.
+        i18nState.isLoading = false;
+      }
+    })();
   }
+  return loadTranslationsPromise;
 }
 
 export function setLanguage(lang: Language) {
