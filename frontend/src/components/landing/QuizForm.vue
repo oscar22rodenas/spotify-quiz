@@ -67,10 +67,11 @@ import Card from '../ui/Card.vue';
 import { isValidSpotifyUrl, fetchQuizFromApi } from '../../utils/spotify';
 import { t } from '../../utils/i18n';
 import { useNavigation } from '../../composables/useNavigation';
+import { useQuizStore } from '../../stores/quizStore';
 
-// Usar el composable de navegación
+// Usar el composable de navegación y el store de Pinia
 const { navigateTo } = useNavigation();
-
+const quizStore = useQuizStore();
 
 const playlistUrl = ref('');
 const urlError = ref('');
@@ -110,20 +111,13 @@ const handleSubmit = async () => {
   isLoading.value = true;
   
   try {
-    // Si hay playlist-url del sessionStorage no hace falta hacer fetch
-    if (sessionStorage.getItem('playlist-url') === playlistUrl.value && sessionStorage.getItem('quiz-questions')) {
-      navigateTo('/quiz');
-      return;
-    }
-    
-    // Fetch quiz data
+    // Fetch quiz data from the backend API
     const questions = await fetchQuizFromApi(playlistUrl.value);
     
-    // Store quiz data in sessionStorage for the quiz page
-    sessionStorage.setItem('quiz-questions', JSON.stringify(questions));
-    sessionStorage.setItem('playlist-url', playlistUrl.value);
+    // Use the Pinia store to set the quiz data
+    quizStore.startQuiz(playlistUrl.value, questions);
     
-    // Navigate to quiz page
+    // Navigate to the quiz page
     navigateTo('/quiz');
   } catch (error) {
     console.error('Error generating quiz:', error);
