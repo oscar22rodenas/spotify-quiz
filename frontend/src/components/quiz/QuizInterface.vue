@@ -109,19 +109,21 @@ import Card from '../ui/Card.vue';
 import { type Question, type QuizState } from '../../utils/spotify';
 import { t } from '../../utils/i18n';
 import { useNavigation } from '../../composables/useNavigation';
+import { useQuizStore } from '../../stores/quizStore';
 
 const { navigateTo } = useNavigation();
+const quizStore = useQuizStore();
 
 // Add reactive state for translations
 const translations = reactive({});
 
-const questions = ref<Question[]>([]);
+const questions = ref<Question[]>(quizStore.questions); // Load questions from store
 const currentQuestion = ref(0);
 const selectedAnswer = ref<number | null>(null);
 const quizState = ref<QuizState>({
   currentQuestion: 0,
   score: 0,
-  questions: [],
+  questions: quizStore.questions, // Also init state with questions from store
   answers: [],
   isComplete: false,
   startTime: new Date()
@@ -160,52 +162,24 @@ const selectAnswer = (answerIndex: number) => {
 
 const nextQuestion = () => {
   if (isLastQuestion.value) {
-    // Complete quiz
+    // 1. Mark quiz as complete and set end time
     quizState.value.isComplete = true;
     quizState.value.endTime = new Date();
 
-    // Asegurar que los datos se guarden correctamente
+    // 2. Compile final results object
     const resultsData = {
       ...quizState.value,
-      questions: questions.value, // Asegurar que las preguntas estén incluidas
       finalScore: quizState.value.score,
       totalQuestions: questions.value.length,
       scorePercentage: Math.round((quizState.value.score / questions.value.length) * 100)
     };
 
-    try {
-      // Guardar en AMBOS storages para mayor seguridad
-      sessionStorage.setItem('quiz-results', JSON.stringify(resultsData));
-      localStorage.setItem('quiz-results-backup', JSON.stringify(resultsData));
-      
-      console.log('✅ Datos guardados en sessionStorage:', resultsData);
-      console.log('✅ Backup guardado en localStorage');
-      
-      // Verificar múltiples veces
-      const sessionCheck = sessionStorage.getItem('quiz-results');
-      const localCheck = localStorage.getItem('quiz-results-backup');
-      console.log('🔍 Verificación sessionStorage:', sessionCheck ? 'OK' : 'ERROR');
-      console.log('🔍 Verificación localStorage:', localCheck ? 'OK' : 'ERROR');
-      
-      // Forzar persistencia antes de navegar
-      setTimeout(() => {
-        // Verificar una vez más antes de navegar
-        const finalCheck = sessionStorage.getItem('quiz-results') || localStorage.getItem('quiz-results-backup');
-        console.log('🔍 Verificación final antes de navegar:', finalCheck ? 'OK' : 'ERROR');
-        
-        if (finalCheck) {
-          console.log('🔄 Navegando a resultados...');
-          navigateTo('/results');
-        } else {
-          console.error('❌ No se pudieron guardar los datos');
-          alert('Error guardando los resultados. Por favor, inténtalo de nuevo.');
-        }
-      }, 10000); // Reducir el tiempo de espera
-      
-    } catch (error) {
-      console.error('❌ Error guardando en sessionStorage:', error);
-      alert('Error guardando los resultados. Por favor, inténtalo de nuevo.');
-    }
+    // 3. Save results to the Pinia store
+    quizStore.completeQuiz(resultsData);
+
+    // 4. Navigate directly to the results page. No more timeouts!
+    navigateTo('/results');
+
   } else {
     // Next question
     currentQuestion.value++;
@@ -215,15 +189,18 @@ const nextQuestion = () => {
 };
 
 onMounted(() => {
-  // Load quiz data
-  const storedQuestions = sessionStorage.getItem('quiz-questions');
-  if (storedQuestions) {
-    questions.value = JSON.parse(storedQuestions);
-    quizState.value.questions = questions.value;
-  } else {
-    // Redirect to home if no quiz data
+  // If there are no questions in the store, the user probably landed
+  // here directly. Redirect them to the home page to start a quiz.
+  if (!quizStore.hasActiveQuiz) {
     navigateTo('/');
+    return;
   }
+
+  // Load questions from the store into the component's reactive state.
+  // This is needed because the store itself is not a ref.
+  questions.value = quizStore.questions;
+  quizState.value.questions = quizStore.questions;
+
 
   // Listen for language changes
   window.addEventListener('language-changed', () => {

@@ -68,13 +68,25 @@ exports.createQuestions = (tracks, count = 10) => {
 };
 
 function quizOptions(correct, pool) {
-  const set = new Set([correct]);
-  while (set.size < 4) {
-    const pick = pool[Math.floor(Math.random() * pool.length)];
-    set.add(pick);
+  // Primero, creamos un pool de distractores que sean únicos y no incluyan la respuesta correcta.
+  const distractors = [...new Set(pool.filter(p => p && p !== correct))];
+
+  // Empezamos nuestro set de opciones finales con la respuesta correcta.
+  const options = new Set([correct]);
+
+  // Barajamos los distractores para que la selección sea aleatoria.
+  distractors.sort(() => 0.5 - Math.random());
+
+  // Añadimos distractores al set de opciones hasta que tengamos 4 en total.
+  let i = 0;
+  while (options.size < 4 && i < distractors.length) {
+    options.add(distractors[i]);
+    i++;
   }
-  const arr = Array.from(set);
-  return arr.sort(() => 0.5 - Math.random());
+
+  // Convertimos el set a un array y lo barajamos una última vez para que la posición
+  // de la respuesta correcta sea aleatoria.
+  return Array.from(options).sort(() => 0.5 - Math.random());
 }
 
 /**
