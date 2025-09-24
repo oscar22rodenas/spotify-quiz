@@ -32,7 +32,6 @@ export const useQuizStore = defineStore('quiz', {
       return state.results !== null;
     },
   },
-
   actions: {
     // Acción interna para guardar el estado actual en sessionStorage.
     _persist() {
