@@ -68,10 +68,11 @@ import { isValidSpotifyUrl, fetchQuizFromApi } from '../../utils/spotify';
 import { t } from '../../utils/i18n';
 import { useNavigation } from '../../composables/useNavigation';
 import { useQuizStore } from '../../stores/quizStore';
+import { pinia } from '../../stores';
 
 // Usar el composable de navegación y el store de Pinia
 const { navigateTo } = useNavigation();
-const quizStore = useQuizStore();
+const quizStore = useQuizStore(pinia);
 
 const playlistUrl = ref('');
 const urlError = ref('');

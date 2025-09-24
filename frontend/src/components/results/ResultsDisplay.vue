@@ -155,10 +155,11 @@ import { type QuizState, calculateScorePercentage, getScoreMessage as getScoreMe
 import { t } from '../../utils/i18n';
 import { useNavigation } from '../../composables/useNavigation';
 import { useQuizStore } from '../../stores/quizStore';
+import { pinia } from '../../stores';
 
 // Usar el composable de navegación y el store de Pinia
 const { navigateTo } = useNavigation();
-const quizStore = useQuizStore();
+const quizStore = useQuizStore(pinia);
 
 // Add reactive state for translations
 const translations = reactive({});
