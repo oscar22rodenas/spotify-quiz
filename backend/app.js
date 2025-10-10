@@ -11,6 +11,7 @@ app.use(express.json());
 const allowedOrigins = [
   'http://localhost:4321',
   'https://spotify-quiz-frontend.vercel.app',
+  'https://spotifyquiz.vercel.app',
   process.env.FRONTEND_URL
 ].filter(Boolean);
 
