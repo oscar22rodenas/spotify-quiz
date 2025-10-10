@@ -21,24 +21,22 @@ export const i18nState = reactive({
 let loadTranslationsPromise: Promise<void> | null = null;
 
 export function loadTranslations() {
-  if (!loadTranslationsPromise) {
-    loadTranslationsPromise = (async () => {
-      try {
-        const languages: Language[] = ['es', 'en', 'ca'];
-        const fetchPromises = languages.map(async (lang) => {
-          const response = await fetch(`/locales/${lang}.json`);
-          if (!response.ok) throw new Error(`Failed to fetch ${lang}.json`);
-          i18nState.translations[lang] = await response.json();
-        });
-        await Promise.all(fetchPromises);
-      } catch (error) {
-        console.error("Failed to load translations:", error);
-      } finally {
-        // Una vez terminada la carga (con o sin error), lo indicamos.
-        i18nState.isLoading = false;
-      }
-    })();
-  }
+  loadTranslationsPromise ??= (async () => {
+    try {
+      const languages: Language[] = ['es', 'en', 'ca'];
+      const fetchPromises = languages.map(async (lang) => {
+        const response = await fetch(`/locales/${lang}.json`);
+        if (!response.ok) throw new Error(`Failed to fetch ${lang}.json`);
+        i18nState.translations[lang] = await response.json();
+      });
+      await Promise.all(fetchPromises);
+    } catch (error) {
+      console.error("Failed to load translations:", error);
+    } finally {
+      // Una vez terminada la carga (con o sin error), lo indicamos.
+      i18nState.isLoading = false;
+    }
+  })();
   return loadTranslationsPromise;
 }
 
