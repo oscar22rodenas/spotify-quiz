@@ -8,9 +8,17 @@ const app = express();
 app.use(express.json());
 
 // Configurar CORS
+const allowedOrigins = [
+  'http://localhost:4321',
+  'https://spotify-quiz-frontend.vercel.app',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:4321',
-  credentials: true
+  origin: allowedOrigins,
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
 }));
 
 // Rutas
