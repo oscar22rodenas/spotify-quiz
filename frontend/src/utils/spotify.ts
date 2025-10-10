@@ -50,7 +50,9 @@ export async function fetchQuizFromApi(playlistUrl: string, questionCount = 10):
     throw new Error('Invalid Spotify playlist URL');
   }
 
-  const res = await fetch('/api/quiz', {
+  const apiUrl = import.meta.env.PUBLIC_API_URL || 'http://localhost:3000';
+
+  const res = await fetch(`${apiUrl}/api/quiz`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ playlistUrl, questionCount })

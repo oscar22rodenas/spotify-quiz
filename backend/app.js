@@ -1,10 +1,17 @@
 // backend/app.js
 const express = require('express');
+const cors = require('cors');
 const quizRoutes = require('./routes/quiz');
 require('dotenv').config();
 
 const app = express();
 app.use(express.json());
+
+// Configurar CORS
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:4321',
+  credentials: true
+}));
 
 // Rutas
 app.use('/api/quiz', quizRoutes);

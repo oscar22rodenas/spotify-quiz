@@ -2,7 +2,8 @@
 node_modules/
 
 # Entorno local
-.env
+.env.local
+.env.production
 
 # Logs
 npm-debug.log*
