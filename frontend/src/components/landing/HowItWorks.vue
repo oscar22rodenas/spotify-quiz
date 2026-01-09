@@ -48,7 +48,7 @@
           ¿Listo para poner a prueba tu conocimiento musical?
         </p>
         <Button @click="scrollToForm" size="lg">
-          <ArrowDown :size="20" />
+          <ArrowUp :size="20" />
           ¡Empezar ahora!
         </Button>
       </div>
@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import { reactive, onMounted } from 'vue';
-import { ArrowDown } from 'lucide-vue-next';
+import { ArrowUp } from 'lucide-vue-next';
 import Button from '../ui/Button.vue';
 import { t } from '../../utils/i18n';
 
