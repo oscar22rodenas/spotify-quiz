@@ -13,7 +13,7 @@
                 id="playlistUrl"
                 v-model="playlistUrl"
                 type="url"
-                :placeholder="t('landing.urlPlaceholder')"
+                placeholder="https://open.spotify.com/playlist/..."
                 :class="[
                   'input-field',
                   {
