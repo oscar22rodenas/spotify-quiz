@@ -24,9 +24,14 @@ export function loadTranslations(origin?: string) {
       const languages: Language[] = ['es', 'en', 'ca'];
       const fetchPromises = languages.map(async (lang) => {
         const path = `/locales/${lang}.json`;
-        // En el servidor, `origin` tendrá un valor (ej: http://localhost:4321)
-        // En el cliente, `origin` será `undefined` y el path relativo funcionará.
-        const url = origin ? `${origin}${path}` : path;
+        
+        // `import.meta.env.SSR` es `true` en el servidor y `false` en el cliente.
+        const isServer = import.meta.env.SSR;
+        
+        // Solo usamos el `origin` si estamos en el servidor.
+        // En el cliente, `isServer` será `false`, así que `url` siempre será el `path` relativo.
+        const url = isServer && origin ? `${origin}${path}` : path;
+
         const response = await fetch(url);
         if (!response.ok) throw new Error(`Failed to fetch ${lang}.json from ${url}`);
         i18nState.translations[lang] = await response.json();
