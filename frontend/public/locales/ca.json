@@ -42,5 +42,59 @@
     },
     "playAgain": "🔄 Una altra ronda, si us plau",
     "shareText": "He obtingut {{score}} de {{total}} al meu Quiz Musical de Spotify! 🎵"
+  },
+  "privacy": {
+    "title": "Política de Privacitat",
+    "lastUpdated": "Última actualització: 15 de gener de 2026",
+    "intro": {
+      "title": "1. Introducció",
+      "p1": "Benvingut a Spotify Quiz, una aplicació dissenyada per posar a prova el teu coneixement musical a través de qüestionaris interactius basats en playlists de Spotify. Aquesta aplicació ha estat creada i és mantinguda per Óscar Ródenas.",
+      "p2": "La teva privacitat és important per a nosaltres. Aquesta política de privacitat explica quina informació es recopila (i, el que és més important, quina no es recopila), com s'utilitza i com protegim les teves dades quan utilitzes Spotify Quiz."
+    },
+    "dataNotCollected": {
+      "title": "2. Dades que No Recopilem",
+      "p1": "Spotify Quiz està dissenyat per funcionar sense recopilar informació personal identificable dels seus usuaris. Això significa que:",
+      "items": [
+        "No recopilem noms, adreces de correu electrònic, números de telèfon ni cap altra informació que pugui identificar-te directament.",
+        "No et demanem que iniciïs sessió amb el teu compte de Spotify. Per tant, no tenim accés a les teves dades d'inici de sessió de Spotify, historial d'escolta, playlists privades ni cap altra informació personal associada al teu compte de Spotify.",
+        "No emmagatzemem els teus resultats de quiz ni el teu progrés. Tota la informació del quiz es processa en temps real i no es desa un cop tanques l'aplicació."
+      ]
+    },
+    "dataAccessed": {
+      "title": "3. Dades a les quals Accedim (API de Spotify)",
+      "p1": "Per generar els qüestionaris, Spotify Quiz interactua amb l'API pública de Spotify. A través d'aquesta API, accedim únicament a informació pública de playlists, que inclou:",
+      "items": [
+        "Noms de playlists i les seves descripcions públiques.",
+        "Noms de cançons, artistes, àlbums i les seves durades.",
+        "Dates de llançament dels àlbums."
+      ],
+      "p2": "Aquesta informació s'utilitza exclusivament amb el propòsit de crear i presentar els qüestionaris. La teva interacció amb l'API de Spotify a través de la nostra aplicació es limita a l'accés a dades públiques. Spotify Quiz no pot realitzar accions en nom teu a Spotify."
+    },
+    "thirdParty": {
+      "title": "4. Serveis de Tercers",
+      "p1": "Spotify Quiz utilitza els següents serveis de tercers:",
+      "items": [
+        "<strong>API de Spotify:</strong> Per obtenir les dades de les playlists. Et recomanem revisar la <a href=\"https://www.spotify.com/es/privacy\" target=\"_blank\" rel=\"noopener noreferrer\">Política de Privacitat de Spotify</a>.",
+        "<strong>Google Analytics:</strong> Utilitzem Google Analytics per comprendre com els usuaris interactuen amb la nostra aplicació. Això ens ajuda a millorar la funcionalitat i l'experiència d'usuari. Google Analytics recopila informació anonimitzada, com el tipus de navegador, el sistema operatiu, les pàgines visitades i el temps de permanència a l'aplicació. Aquesta informació no t'identifica personalment. Pots obtenir més informació sobre com Google utilitza les dades a la seva <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener noreferrer\">Política de Privacitat de Google</a>."
+      ]
+    },
+    "cookies": {
+      "title": "5. Galetes i Emmagatzematge Local/de Sessió",
+      "p1": "Spotify Quiz utilitza tecnologies d'emmagatzematge web per millorar la teva experiència:",
+      "items": [
+        "<strong>Local Storage:</strong> S'utilitza per recordar les teves preferències d'idioma i tema (clar/fosc) entre sessions de navegació. Això permet que l'aplicació es carregui amb els teus ajustos preferits sense necessitat de restablir-los.",
+        "<strong>Session Storage:</strong> Es pot utilitzar per emmagatzemar temporalment informació relacionada amb el quiz actual mentre estàs actiu a l'aplicació, com el progrés del quiz, la puntuació i les respostes. Aquesta informació s'elimina automàticament quan tanques la finestra o pestanya del navegador.",
+        "<strong>Galetes (Cookies):</strong> Google Analytics pot utilitzar galetes per recopilar dades d'ús de forma anonimitzada."
+      ],
+      "p2": "Aquestes tecnologies s'utilitzen per al funcionament essencial de l'aplicació i per a finalitats analítiques (Google Analytics) i no per identificar-te personalment."
+    },
+    "policyChanges": {
+      "title": "6. Canvis en aquesta Política",
+      "p1": "Ens reservem el dret d'actualitzar aquesta Política de Privacitat en qualsevol moment. Qualsevol canvi serà publicat en aquesta pàgina amb una nova data d'\"Última actualització\". T'animem a revisar aquesta política periòdicament per estar informat sobre com protegim la teva informació."
+    },
+    "contact": {
+      "title": "7. Contacte",
+      "p1": "Si tens alguna pregunta sobre aquesta Política de Privacitat, pots contactar amb l'Óscar Ródenas a la següent adreça de correu electrònic: <a href=\"mailto:oscarrodenaslujan@gmail.com\">oscarrodenaslujan@gmail.com</a>."
+    }
   }
 }

@@ -2,7 +2,7 @@
 node_modules/
 
 # Entorno local
-.env.local
+.env
 .env.production
 
 # Logs

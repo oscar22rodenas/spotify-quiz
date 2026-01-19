@@ -56,7 +56,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
   <body class="min-h-screen bg-gradient-to-br from-pearl via-white to-melody-50 dark:from-charcoal dark:via-slate-900 dark:to-melody-900/20">
     <div id="app" class="min-h-screen">
-      <I18nProvider client:load>
+      <I18nProvider client:load origin={Astro.url.origin}>
         <slot />
       </I18nProvider>
     </div>

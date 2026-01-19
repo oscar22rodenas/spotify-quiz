@@ -21,7 +21,7 @@ exports.getPlaylistTracks = async (playlistId) => {
 const token = await getToken();
 const url = `https://api.spotify.com/v1/playlists/${playlistId}?fields=${FIELDS}`;
 const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-console.log('⏱ Spotify responded:', res.status);
+
 if (!res.ok) throw Object.assign(new Error('Playlist no encontrada'), { status: res.status });
 const json = await res.json();
 return json.tracks.items.map(item => ({

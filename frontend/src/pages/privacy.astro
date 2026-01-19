@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.vue';
+import PrivacyContent from '../components/privacy/PrivacyContent.vue';
+import '../styles/global.css';
+---
+
+<Layout title="Política de Privacidad - Spotify Quiz">
+  <Header client:load />
+  <main class="py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <PrivacyContent client:load />
+    </div>
+  </main>
+</Layout>

@@ -120,9 +120,9 @@ const handleSubmit = async () => {
     
     // Navigate to the quiz page
     navigateTo('/quiz');
-  } catch (error) {
+  } catch (error: any) { // Explicitly type error as 'any' for message property
     console.error('Error generating quiz:', error);
-    urlError.value = 'Error al generar el quiz. Por favor, inténtalo de nuevo.';
+    urlError.value = error.message;
   } finally {
     isLoading.value = false;
   }

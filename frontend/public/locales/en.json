@@ -42,5 +42,59 @@
     },
     "playAgain": "🔄 Another round, please",
     "shareText": "I got {{score}} out of {{total}} on my Spotify Music Quiz! 🎵"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: January 15, 2026",
+    "intro": {
+      "title": "1. Introduction",
+      "p1": "Welcome to Spotify Quiz, an application designed to test your musical knowledge through interactive quizzes based on Spotify playlists. This application was created and is maintained by Óscar Ródenas.",
+      "p2": "Your privacy is important to us. This privacy policy explains what information is collected (and, more importantly, what is not collected), how it is used, and how we protect your data when you use Spotify Quiz."
+    },
+    "dataNotCollected": {
+      "title": "2. Data We Do Not Collect",
+      "p1": "Spotify Quiz is designed to work without collecting personally identifiable information from its users. This means that:",
+      "items": [
+        "We do not collect names, email addresses, phone numbers, or any other information that could directly identify you.",
+        "We do not ask you to log in with your Spotify account. Therefore, we do not have access to your Spotify login data, listening history, private playlists, or any other personal information associated with your Spotify account.",
+        "We do not store your quiz results or progress. All quiz information is processed in real-time and is not saved once you close the application."
+      ]
+    },
+    "dataAccessed": {
+      "title": "3. Data We Access (Spotify API)",
+      "p1": "To generate quizzes, Spotify Quiz interacts with the public Spotify API. Through this API, we only access public playlist information, which includes:",
+      "items": [
+        "Playlist names and their public descriptions.",
+        "Song names, artists, albums, and their durations.",
+        "Album release dates."
+      ],
+      "p2": "This information is used exclusively for the purpose of creating and presenting the quizzes. Your interaction with the Spotify API through our application is limited to accessing public data. Spotify Quiz cannot perform actions on your behalf on Spotify."
+    },
+    "thirdParty": {
+      "title": "4. Third-Party Services",
+      "p1": "Spotify Quiz uses the following third-party services:",
+      "items": [
+        "<strong>Spotify API:</strong> To get playlist data. We recommend reviewing the <a href=\"https://www.spotify.com/us/legal/privacy-policy/\" target=\"_blank\" rel=\"noopener noreferrer\">Spotify Privacy Policy</a>.",
+        "<strong>Google Analytics:</strong> We use Google Analytics to understand how users interact with our application. This helps us improve functionality and user experience. Google Analytics collects anonymized information such as browser type, operating system, pages visited, and time spent on the application. This information does not personally identify you. You can learn more about how Google uses data in its <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener noreferrer\">Google Privacy Policy</a>."
+      ]
+    },
+    "cookies": {
+      "title": "5. Cookies and Local/Session Storage",
+      "p1": "Spotify Quiz uses web storage technologies to improve your experience:",
+      "items": [
+        "<strong>Local Storage:</strong> It is used to remember your language and theme (light/dark) preferences between browsing sessions. This allows the application to load with your preferred settings without needing to reset them.",
+        "<strong>Session Storage:</strong> It may be used to temporarily store information related to the current quiz while you are active in the application, such as quiz progress, score, and answers. This information is automatically deleted when you close the browser window or tab.",
+        "<strong>Cookies:</strong> Google Analytics may use cookies to collect usage data anonymously."
+      ],
+      "p2": "These technologies are used for the essential functioning of the application and for analytical purposes (Google Analytics) and not to personally identify you."
+    },
+    "policyChanges": {
+      "title": "6. Changes to this Policy",
+      "p1": "We reserve the right to update this Privacy Policy at any time. Any changes will be posted on this page with a new \"Last updated\" date. We encourage you to review this policy periodically to stay informed about how we protect your information."
+    },
+    "contact": {
+      "title": "7. Contact",
+      "p1": "If you have any questions about this Privacy Policy, you can contact Óscar Ródenas at the following email address: <a href=\"mailto:oscarrodenaslujan@gmail.com\">oscarrodenaslujan@gmail.com</a>."
+    }
   }
 }

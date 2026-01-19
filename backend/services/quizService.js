@@ -46,16 +46,9 @@ exports.createQuestions = (tracks, count = 10) => {
       }
         break;
     }
-    console.log(`▷ Generando pregunta: ${question}`);
-    console.log(`   - Tipo: ${type}`);
-    console.log(`   - Respuesta correcta: ${correct}`);
-    console.log(`   - Pool de respuestas: ${pool.join(', ')}`);
     // ⚠️ Generamos opciones y localizamos la correcta
     const options = quizOptions(correct, pool);
-    const correctAnswerIndex = options.indexOf(correct);
-    console.log(`   - Opciones: ${options.join(', ')}`);
-    console.log(`   - Respuesta correcta index: ${correctAnswerIndex}`);
-    
+    const correctAnswerIndex = options.indexOf(correct);   
 
     return {
       id: uuidv4(),
