@@ -11,7 +11,7 @@
   "landing": {
     "title": "Descubre qué tanto conoces tu música favorita",
     "subtitle": "Pega tu playlist de Spotify y prepárate para el desafío musical definitivo",
-    "urlPlaceholder": "https://open.spotify.com/playlist/...",
+    "label": "URL de tu playlist de Spotify",
     "createQuiz": "¡Crear mi Quiz Musical!",
     "howItWorks": {
       "title": "¿Cómo funciona?",

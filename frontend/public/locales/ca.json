@@ -11,7 +11,7 @@
   "landing": {
     "title": "Descobreix què tan bé coneixes la teva música favorita",
     "subtitle": "Enganxa la teva playlist de Spotify i prepara't per al desafiament musical definitiu",
-    "urlPlaceholder": "https://open.spotify.com/playlist/...",
+    "label": "URL de la teva playlist de Spotify",
     "createQuiz": "Crear el meu Quiz Musical!",
     "howItWorks": {
       "title": "Com funciona?",

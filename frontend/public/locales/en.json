@@ -11,8 +11,8 @@
   "landing": {
     "title": "Discover how well you know your favorite music",
     "subtitle": "Paste your Spotify playlist and get ready for the ultimate musical challenge",
-    "urlPlaceholder": "https://open.spotify.com/playlist/...",
-    "createQuiz": "🎵 Create my Music Quiz!",
+    "label": "Spotify playlist URL",
+    "createQuiz": "Create my Music Quiz!",
     "howItWorks": {
       "title": "How it works?",
       "step1": "🔗 Paste your Spotify playlist",

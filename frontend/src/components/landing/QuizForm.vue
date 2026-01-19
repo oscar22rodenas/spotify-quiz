@@ -6,7 +6,7 @@
           <!-- URL Input -->
           <div class="space-y-2">
             <label for="playlistUrl" class="block text-sm font-medium text-charcoal dark:text-pearl text-left">
-              URL de tu playlist de Spotify
+              {{ t('landing.label') }}
             </label>
             <div class="relative">
               <input
@@ -130,7 +130,7 @@ const handleSubmit = async () => {
 
 onMounted(() => {
   // Listen for language changes
-  window.addEventListener('language-changed', () => {
+  globalThis.window.addEventListener('language-changed', () => {
     // Force reactivity update
     Object.assign(translations, {});
   });
